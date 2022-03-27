@@ -1,3 +1,54 @@
+
+
+.App {
+  background-color: whitesmoke;
+  height: 100vh;
+  padding: 3rem 6rem;
+}
+
+.App__header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.App__headerLeft {
+  display: flex;
+  flex-direction: column;
+}
+
+.App__headerLeft > .text1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #461273;
+}
+
+
+.App__headerLeft > .text2 {
+  color: #A596B3;
+}
+
+.App__headerRight .section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: white;
+  padding: 1rem 1.3rem;
+  border-radius: 10rem;
+}
+
+.App__headerRight .section .icons {
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+.App__headerRight .input_field {
+  border: none;
+  outline: none;
+}
+
 .App__body {
   display: flex;
   flex-direction: 'row';

@@ -4,15 +4,37 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { FaSearch } from 'react-icons/fa';
 
-function Desktop() {
+function Desktop({data, country, handleSubmit, setCountry}) {
   const [value, onChange] = useState(new Date());
-  const [country, setCountry] = useState('Nigeria')
 
-  const baseUrl = `http://127.0.0.1:8000/${country}/`
+  useEffect=(() => {
+
+  }, [data, country])
 
   return (
 
-      <div className='App__body'>
+    <div className='App'>
+      <div className="App__header">
+
+        <div className='App__headerLeft'>
+          <span className='text1'>Covid-19</span>
+          <span className="text2">Realtime Search Tracker</span>
+          
+        </div>
+
+        <div className='App__headerRight'>
+          <form className='section' onSubmit={handleSubmit}>
+            <input placeholder='Search Country' value={country} 
+            onChange={(e) => setCountry(e.target.value)} className="input_field"  />
+
+            <FaSearch className='icons' />
+          </form>
+          
+        </div>
+
+        </div>
+
+        <div className='App__body'>
 
 
         <div className='App__bodyLeft '>
@@ -22,7 +44,7 @@ function Desktop() {
 
               <div>
                 <p>Confirmed Cases</p>
-                <h2>1000</h2>
+                <h2>{data.confirmed}</h2>
               </div>
               
             </div>
@@ -30,21 +52,21 @@ function Desktop() {
             <div className='sectionLeft__data text2'>
               <div>
                 <p>Recovered Cases</p>
-                <h2>1000</h2>
+                <h2>{data.recovered}</h2>
               </div>
             </div>
 
             <div className='sectionLeft__data text3'>
               <div>
                 <p>Death</p>
-                <h2>1000</h2>
+                <h2>{data.deaths}</h2>
               </div>
             </div>
 
             <div className='sectionLeft__data text4'>
               <div>
                 <p>Life Expectancy</p>
-                <h2>1000</h2>
+                <h2>{data.life_expectancy}</h2>
               </div> 
   
             </div>
@@ -57,11 +79,11 @@ function Desktop() {
           <div className='App__bodyLeft__sectionRight'> 
             <div className='sectionRight__data'>
               <p>Selected Country</p>
-              <h2>Nigeria</h2>
+              <h2>{data.country}</h2>
 
-              <p>Capital City: Abuja</p>
-              <p>Longitude: 9.082 </p>
-              <p>Latitude: 9.082</p>
+              <p>Capital City: {data.capital_city}</p>
+              <p>Longitude: {data.lat} </p>
+              <p>Latitude: {data.long}</p>
             </div> 
           </div> 
 
@@ -83,7 +105,7 @@ function Desktop() {
         
 
       </div>
-      
+    </div>
 
   )
 }
