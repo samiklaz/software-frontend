@@ -82,8 +82,8 @@ function Desktop({data, country, handleSubmit, setCountry}) {
               <h2>{data.country}</h2>
 
               <p>Capital City: {data.capital_city}</p>
-              <p>Longitude: {data.lat} </p>
-              <p>Latitude: {data.long}</p>
+              <p>Continent: {data.continent} </p>
+              <p>Location: {data.location}</p>
             </div> 
           </div> 
 

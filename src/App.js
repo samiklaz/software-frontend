@@ -1,24 +1,26 @@
 import React, { Component } from 'react'
-import { FaSearch } from 'react-icons/fa';
-import { useMediaQuery } from 'react-responsive'
 import axios from 'axios'
 import Desktop from './pages/Desktop';
+import './App.css'
 
 export class App extends Component {
+
+  
 
   constructor(props) {
     super(props)
     this.state = {
       data: {},
       isLoaded: false,
-      country : 'Nigeria'
+      country : 'Nigeria',
+      matches: window.matchMedia("min-width: 768px")
     }
 
   }
 
   handleSubmit = (event) => {
     event.preventDefault()
-    console.log("callinf it")
+    console.log("calling it")
     this.callAPi()
   }
 
@@ -30,7 +32,14 @@ export class App extends Component {
   }
 
   callAPi = () => {
+    this.setState({
+      isLoaded: false
+    })
+
+    // This baseUrl is used when docker is running on a Local machine on URL http://127.0.0.1:8000/
     const baseUrl = `http://127.0.0.1:8000/${this.state.country}/`
+
+
     axios.get(baseUrl, {
       headers: {
         'Content-Type': 'application/json',
@@ -45,17 +54,28 @@ export class App extends Component {
           data : response.data
         })
       }
+     
 
       else if(response.data.status == 'failed' && response.data.message == "invalid_country") {
+        this.setState({
+          isLoaded: true
+        })
         alert("Country does'nt exist or it wasn't spelt well. Try again!!!")
       }
       else {
+        this.setState({
+          isLoaded: true
+        })
         alert("An error occured. Try again")
       }
     })
     .catch(error => {
       // setIsLoading(false)
+      this.setState({
+        isLoaded: true
+      })
       console.log("ERROR is here", error);
+      alert("You are experiencing a network issue. It's either your data connection is off or you are referencing the wrong url")
       
     })
   }
@@ -65,16 +85,27 @@ export class App extends Component {
   }
   render() {
 
-    var {isLoaded, data, country} = this.state
+    var {isLoaded, data, country, matches} = this.state
 
     if(!isLoaded) {
       return (
-        <div>Loading.....</div>
+        <div className='Loading'>
+          <p>Loading.....</p>
+        </div>
       )
     } else {
       {console.log("This is the data in body", data)}
       return (
-        <Desktop country={country} handleSubmit={this.handleSubmit} setCountry={this.setCountry} data={data} />
+        <>
+          {matches && (
+            <Desktop country={country} handleSubmit={this.handleSubmit} setCountry={this.setCountry} data={data} />
+          )}
+
+          {!matches && (
+            <p>Not customized for this screen</p>
+          )}
+          
+        </>
       )
     }
     
